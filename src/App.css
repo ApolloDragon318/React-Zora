@@ -1,0 +1,12 @@
+.App {
+  padding: 50px;
+}
+
+body {
+  background-color: rgba(128, 128, 128, 0.3);
+}
+
+.image-dashboard {
+  background-color: white;
+  padding: 30px;
+}

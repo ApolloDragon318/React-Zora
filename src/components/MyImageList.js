@@ -4,7 +4,7 @@ import ImageCard from "./ImageCard";
 
 const MyImageList = ({ images }) => {
   return (
-    <ImageList variant="masonry" cols={3} gap={8}>
+    <ImageList variant="quilted" cols={3} gap={8}>
       {images.map((image) => (
         <ImageCard key={image.id} image={image} />
       ))}

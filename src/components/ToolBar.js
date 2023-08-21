@@ -1,16 +1,25 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import {
   Button,
   FormControl,
   Select,
   MenuItem,
   InputLabel,
+  Box,
 } from "@mui/material";
 
 const ToolBar = ({ sortBy, setSortBy, filterBy, setFilterBy }) => {
   return (
-    <div>
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 3,
+        marginBottom: 3,
+      }}
+    >
+      <FormControl variant="filled" sx={{ m: 1, minWidth: 220 }}>
         <InputLabel id="color-filter-selector">Filter by color</InputLabel>
         <Select
           labelId="color-filter-selector"
@@ -34,13 +43,19 @@ const ToolBar = ({ sortBy, setSortBy, filterBy, setFilterBy }) => {
           <MenuItem value="blue">Blue</MenuItem>
         </Select>
       </FormControl>
-      <Button
-        variant={sortBy ? "contained" : "outlined"}
-        onClick={() => setSortBy(!sortBy)}
-      >
-        {sortBy ? "Sort by popular" : "Sort by latest"}
-      </Button>
-    </div>
+      <FormControl variant="filled" sx={{ m: 1, minWidth: 220 }}>
+        <InputLabel id="sort-by-selector">Filter by color</InputLabel>
+        <Select
+          labelId="sort-by-selector"
+          value={sortBy}
+          onChange={(event) => setSortBy(event.target.value)}
+          label="Sort by ..."
+        >
+          <MenuItem value={true}>Sort by latest</MenuItem>
+          <MenuItem value={false}>Sort by popular</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Pagination } from "@mui/material";
+import { Pagination, Container, CircularProgress, Box } from "@mui/material";
 
 import unsplash from "../app/unsplash";
 
@@ -14,12 +14,11 @@ const ImageDashboard = () => {
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(1);
-  const [perPage, setPerPage] = useState(20);
+  const [perPage, setPerPage] = useState(21);
   const [sortBy, setSortBy] = useState(false);
   const [filterBy, setFilterBy] = useState("");
 
   const fetchData = async () => {
-    console.log(activePage);
     const params = {
       query: term,
       page: activePage,
@@ -48,7 +47,6 @@ const ImageDashboard = () => {
         setLoading("loading");
         const data = await fetchData();
 
-        console.log(data);
         setImages(data.results);
         setTotal(data.total);
         setTotalPages(data.total_pages);
@@ -61,29 +59,49 @@ const ImageDashboard = () => {
     fetchImages();
   }, [term, activePage, sortBy, filterBy]);
 
-  return loading ? (
-    <div>Loading...</div>
-  ) : (
-    <div>
-      <SearchInput onSubmitSearchInput={onSubmitSearchInput} />
-      {total > 0 && (
+  return (
+    <Container fixed className="image-dashboard">
+      {loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
         <>
-          <ToolBar
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            filterBy={filterBy}
-            setFilterBy={setFilterBy}
-          />
-          <MyImageList images={images} />
-          <Pagination
-            count={totalPages}
-            color="primary"
-            page={activePage}
-            onChange={handlePageChange}
-          />
+          <SearchInput onSubmitSearchInput={onSubmitSearchInput} term={term} />
+          {total > 0 && (
+            <>
+              <ToolBar
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                filterBy={filterBy}
+                setFilterBy={setFilterBy}
+              />
+              <MyImageList images={images} />
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Pagination
+                  count={totalPages}
+                  color="primary"
+                  page={activePage}
+                  onChange={handlePageChange}
+                />
+              </Box>
+            </>
+          )}
         </>
       )}
-    </div>
+    </Container>
   );
 };
 
