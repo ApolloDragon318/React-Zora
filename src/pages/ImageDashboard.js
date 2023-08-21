@@ -1,8 +1,11 @@
-import React, {useState, useCallback, useEffect} from 'react'
-import SearchInput from '../components/SearchInput';
-import unsplash from '../app/unsplash';
-import MyImageList from '../components/MyImageList';
-import { Pagination } from '@mui/material';
+import React, { useState, useCallback, useEffect } from "react";
+import { Pagination } from "@mui/material";
+
+import unsplash from "../app/unsplash";
+
+import SearchInput from "../components/SearchInput";
+import MyImageList from "../components/MyImageList";
+import ToolBar from "../components/ToolBar";
 
 const ImageDashboard = () => {
   const [term, setTerm] = useState("");
@@ -12,16 +15,22 @@ const ImageDashboard = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const [perPage, setPerPage] = useState(20);
+  const [sortBy, setSortBy] = useState(false);
 
   const fetchData = async () => {
     console.log(activePage);
     const response = await unsplash.get("/search/photos", {
-      params: { query: term, page: activePage, per_page: perPage },
+      params: {
+        query: term,
+        page: activePage,
+        per_page: perPage,
+        order_by: sortBy ? "latest" : "popular",
+      },
     });
     return response.data;
   };
 
-  const onSubmitSearchInput = useCallback(searchInput => {
+  const onSubmitSearchInput = useCallback((searchInput) => {
     setTerm(searchInput);
     setLoading("loading");
   }, []);
@@ -49,16 +58,27 @@ const ImageDashboard = () => {
     };
 
     fetchImages();
-  }, [term, activePage]);
+  }, [term, activePage, sortBy]);
 
-  return (
-    loading ? <div>Loading...</div> :
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
     <div>
-      <SearchInput onSubmitSearchInput={onSubmitSearchInput}/>
-      {images.length > 0 && <MyImageList images={images} />}
-      {totalPages > 0 && <Pagination count={totalPages} color="primary" page={activePage} onChange={handlePageChange} />}
+      <SearchInput onSubmitSearchInput={onSubmitSearchInput} />
+      {total > 0 && (
+        <>
+          <ToolBar sortBy={sortBy} setSortBy={setSortBy} />
+          <MyImageList images={images} />
+          <Pagination
+            count={totalPages}
+            color="primary"
+            page={activePage}
+            onChange={handlePageChange}
+          />
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default ImageDashboard;
