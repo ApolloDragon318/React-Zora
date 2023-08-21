@@ -4,7 +4,7 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchInput = ({onSubmitSearchInput}) => {
+const SearchInput = ({onSubmitSearchInput, loading}) => {
   const [searchInput, setSearchInput] = useState("");
 
   const onChangeSearchInput = useCallback((e) => {
@@ -16,13 +16,14 @@ const SearchInput = ({onSubmitSearchInput}) => {
       toogleSearchButton();
       e.preventDefault();
     }
-  }, []);
+  }, [searchInput]);
 
   const toogleSearchButton = useCallback(() => {
     onSubmitSearchInput(searchInput);
   }, [searchInput]);
 
   return (
+    loading ? <div>Loading...</div> :
     <Paper
       component="form"
       sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}

@@ -51,7 +51,7 @@ const ImageDashboard = () => {
 
   return (
     <div>
-      <SearchInput onSubmitSearchInput={onSubmitSearchInput}/>
+      <SearchInput onSubmitSearchInput={onSubmitSearchInput} loading={loading}/>
       <MyImageList images={images} />
     </div>
   )
