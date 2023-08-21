@@ -55,8 +55,8 @@ const ImageDashboard = () => {
     loading ? <div>Loading...</div> :
     <div>
       <SearchInput onSubmitSearchInput={onSubmitSearchInput}/>
-      <MyImageList images={images} />
-      <Pagination count={totalPages} color="primary" page={activePage} onChange={handlePageChange} defaultActivePage={1} />
+      {images.length > 0 && <MyImageList images={images} />}
+      {totalPages > 0 && <Pagination count={totalPages} color="primary" page={activePage} onChange={handlePageChange} />}
     </div>
   )
 }
