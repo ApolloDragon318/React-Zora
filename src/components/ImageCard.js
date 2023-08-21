@@ -6,7 +6,7 @@ const ImageCard = ({image}) => {
     <ImageListItem key={image.img}>
       <img
         alt={image.alt_description}
-        src={image.urls.regular}
+        src={image.urls.small}
         loading="lazy"
       />
     </ImageListItem>
