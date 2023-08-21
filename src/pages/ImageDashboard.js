@@ -2,6 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react'
 import SearchInput from '../components/SearchInput';
 import unsplash from '../app/unsplash';
 import MyImageList from '../components/MyImageList';
+import { Pagination } from '@mui/material';
 
 const ImageDashboard = () => {
   const [term, setTerm] = useState("");
@@ -13,6 +14,7 @@ const ImageDashboard = () => {
   const [perPage, setPerPage] = useState(20);
 
   const fetchData = async () => {
+    console.log(activePage);
     const response = await unsplash.get("/search/photos", {
       params: { query: term, page: activePage, per_page: perPage },
     });
@@ -24,8 +26,8 @@ const ImageDashboard = () => {
     setLoading("loading");
   }, []);
 
-  const handlePageChange = async (activePage) => {
-    setActivePage(activePage);
+  const handlePageChange = (event, newPage) => {
+    setActivePage(newPage);
   };
 
   useEffect(() => {
@@ -53,6 +55,7 @@ const ImageDashboard = () => {
     <div>
       <SearchInput onSubmitSearchInput={onSubmitSearchInput} loading={loading}/>
       <MyImageList images={images} />
+      <Pagination count={totalPages} color="primary" page={activePage} onChange={handlePageChange} defaultActivePage={1} />
     </div>
   )
 }
