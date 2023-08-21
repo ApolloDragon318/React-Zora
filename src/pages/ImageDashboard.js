@@ -16,17 +16,18 @@ const ImageDashboard = () => {
   const [activePage, setActivePage] = useState(1);
   const [perPage, setPerPage] = useState(20);
   const [sortBy, setSortBy] = useState(false);
+  const [filterBy, setFilterBy] = useState("");
 
   const fetchData = async () => {
     console.log(activePage);
-    const response = await unsplash.get("/search/photos", {
-      params: {
-        query: term,
-        page: activePage,
-        per_page: perPage,
-        order_by: sortBy ? "latest" : "popular",
-      },
-    });
+    const params = {
+      query: term,
+      page: activePage,
+      per_page: perPage,
+      order_by: sortBy ? "latest" : "popular",
+    };
+    if (filterBy !== "") params.color = filterBy;
+    const response = await unsplash.get("/search/photos", { params });
     return response.data;
   };
 
@@ -58,7 +59,7 @@ const ImageDashboard = () => {
     };
 
     fetchImages();
-  }, [term, activePage, sortBy]);
+  }, [term, activePage, sortBy, filterBy]);
 
   return loading ? (
     <div>Loading...</div>
@@ -67,7 +68,12 @@ const ImageDashboard = () => {
       <SearchInput onSubmitSearchInput={onSubmitSearchInput} />
       {total > 0 && (
         <>
-          <ToolBar sortBy={sortBy} setSortBy={setSortBy} />
+          <ToolBar
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            filterBy={filterBy}
+            setFilterBy={setFilterBy}
+          />
           <MyImageList images={images} />
           <Pagination
             count={totalPages}
