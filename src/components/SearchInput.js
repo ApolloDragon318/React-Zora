@@ -4,7 +4,7 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchInput = () => {
+const SearchInput = ({onSubmitSearchInput}) => {
   const [searchInput, setSearchInput] = useState("");
 
   const onChangeSearchInput = useCallback((e) => {
@@ -19,8 +19,8 @@ const SearchInput = () => {
   }, []);
 
   const toogleSearchButton = useCallback(() => {
-    console.log("Search Button"); //
-  }, []);
+    onSubmitSearchInput(searchInput);
+  }, [searchInput]);
 
   return (
     <Paper
