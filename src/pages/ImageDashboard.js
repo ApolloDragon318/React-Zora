@@ -88,6 +88,7 @@ const ImageDashboard = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  marginTop: 3,
                 }}
               >
                 <Pagination
