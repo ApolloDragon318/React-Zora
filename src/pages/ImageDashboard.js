@@ -47,7 +47,13 @@ const ImageDashboard = () => {
         setLoading("loading");
         const data = await fetchData();
 
-        setImages(data.results);
+        setImages(
+          data.results.map((image) => ({
+            description: image.alt_description,
+            id: image.id,
+            url: image.urls.small,
+          }))
+        );
         setTotal(data.total);
         setTotalPages(data.total_pages);
         setLoading("");

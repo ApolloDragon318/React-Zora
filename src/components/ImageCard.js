@@ -1,10 +1,10 @@
 import React from "react";
 import { ImageListItem } from "@mui/material";
 
-const ImageCard = ({ image }) => {
+const ImageCard = ({ description, id, url }) => {
   return (
-    <ImageListItem key={image.img}>
-      <img alt={image.alt_description} src={image.urls.small} loading="lazy" />
+    <ImageListItem>
+      <img alt={description} src={url} loading="lazy" data-testid={id} />
     </ImageListItem>
   );
 };
